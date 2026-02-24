@@ -20,7 +20,7 @@ function findGitDir(startPath) {
 
 function printHelp() {
   console.log(`
-git-unpack - Unpack Git pack files to loose objects
+git-unpack - Unpack Git pack files and refs to loose format
 
 USAGE:
   git-unpack [options] [path]
@@ -30,15 +30,19 @@ ARGUMENTS:
                     (defaults to current directory)
 
 OPTIONS:
-  -d, --delete      Delete pack files after unpacking
-  -v, --verbose     Show each object as it's unpacked
+  -d, --delete      Delete pack files and packed-refs after unpacking
+  -v, --verbose     Show each object/ref as it's unpacked
   -h, --help        Show this help message
+
+UNPACKS:
+  - Pack files (.git/objects/pack/*.pack) -> loose objects
+  - Packed refs (.git/packed-refs) -> individual ref files
 
 EXAMPLES:
   git-unpack                    Unpack in current repository
   git-unpack /path/to/repo      Unpack in specified repository
   git-unpack .git               Unpack using .git directory directly
-  git-unpack -d                 Unpack and delete pack files
+  git-unpack -d                 Unpack and delete packed files
 `);
 }
 
@@ -99,16 +103,16 @@ function main() {
 
   console.log(`Git directory: ${gitDir}`);
 
-  // Check if pack directory exists
+  // Check if there's anything to unpack
   const packDir = path.join(gitDir, 'objects', 'pack');
-  if (!fs.existsSync(packDir)) {
-    console.log('No pack directory found. Nothing to unpack.');
-    process.exit(0);
-  }
+  const packedRefsPath = path.join(gitDir, 'packed-refs');
 
-  const packFiles = fs.readdirSync(packDir).filter(f => f.endsWith('.pack'));
-  if (packFiles.length === 0) {
-    console.log('No pack files found. Nothing to unpack.');
+  const hasPackDir = fs.existsSync(packDir);
+  const packFiles = hasPackDir ? fs.readdirSync(packDir).filter(f => f.endsWith('.pack')) : [];
+  const hasPackedRefs = fs.existsSync(packedRefsPath);
+
+  if (packFiles.length === 0 && !hasPackedRefs) {
+    console.log('No pack files or packed-refs found. Nothing to unpack.');
     process.exit(0);
   }
 
