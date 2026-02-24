@@ -1,0 +1,41 @@
+{
+  "name": "git-unpack",
+  "version": "1.0.0",
+  "description": "CLI tool to unpack Git pack files to loose objects",
+  "main": "index.js",
+  "bin": {
+    "git-unpack": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js --help"
+  },
+  "keywords": [
+    "git",
+    "pack",
+    "unpack",
+    "objects",
+    "packfile",
+    "cli",
+    "delta",
+    "blob",
+    "commit"
+  ],
+  "author": "MarkJamesHoward",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkJamesHoward/git-unpack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MarkJamesHoward/git-unpack/issues"
+  },
+  "homepage": "https://markj.github.io/git-unpack",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "index.js",
+    "lib/"
+  ]
+}
