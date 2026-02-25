@@ -4,7 +4,7 @@
   "description": "CLI tool to unpack Git pack files to loose objects",
   "main": "index.js",
   "bin": {
-    "git-unpack": "./index.js"
+    "git-unpack": "index.js"
   },
   "scripts": {
     "start": "node index.js",
