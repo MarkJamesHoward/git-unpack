@@ -11,6 +11,12 @@ CLI tool to unpack Git pack files to loose objects.
 npm install -g git-unpack
 ```
 
+Or run directly without installing:
+
+```bash
+npx git-unpack
+```
+
 ## Usage
 
 ```bash
